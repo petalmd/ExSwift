@@ -1,25 +1,32 @@
-inhibit_all_warnings!
+install! 'cocoapods', :deterministic_uuids => false
+
+platform :ios, '9.0'
 use_frameworks!
+
+# ignore all warnings from all pods
+inhibit_all_warnings!
 
 def import_test_pods
 
-    pod 'Quick', '~> 0.3.1'
-    pod 'Nimble', '~> 0.4.2'
+    pod 'Quick', '~> 1.0'
+    pod 'Nimble', '~> 7.0'
 
 end
 
-target "ExSwiftTests-iOS" do
-
-    platform :ios, '8.0'
+target "ExSwiftTests" do
 
     import_test_pods
 
 end
 
-target "ExSwiftTests-Mac" do
-
-    platform :osx, '10.10'
-
-    import_test_pods
-
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '4.2'
+      config.build_settings['CLANG_ENABLE_MODULES'] = 'YES'
+      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 9.0
+      	config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+      end
+    end
+  end
 end

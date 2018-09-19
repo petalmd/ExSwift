@@ -36,15 +36,15 @@ public extension String {
         return String(self[range])
     }
 
-    subscript (range: CountableRange<Int>) -> String {
-        if range.lowerBound < 0 || range.upperBound > self.length {
-           return ""
-        }
-
-        let range = self.index(startIndex, offsetBy: range.lowerBound) ..< self.index(startIndex, offsetBy: range.upperBound)
-
-        return String(self[range])
-    }
+//    subscript (range: CountableRange<Int>) -> String {
+//        if range.lowerBound < 0 || range.upperBound > self.length {
+//           return ""
+//        }
+//
+//        let range = self.index(startIndex, offsetBy: range.lowerBound) ..< self.index(startIndex, offsetBy: range.upperBound)
+//
+//        return String(self[range])
+//    }
 
 
     /**
